@@ -25,12 +25,12 @@
  * add them here.
  */
 
-#include "qa_tpms_poore.h"
+#include "qa_zwave_poore.h"
 
 CppUnit::TestSuite *
-qa_tpms_poore::suite()
+qa_zwave_poore::suite()
 {
-  CppUnit::TestSuite *s = new CppUnit::TestSuite("tpms_poore");
+  CppUnit::TestSuite *s = new CppUnit::TestSuite("zwave_poore");
 
   return s;
 }

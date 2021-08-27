@@ -19,18 +19,17 @@
 # The presence of this file turns this directory into a Python package
 
 '''
-This is the GNU Radio TPMS_POORE module. Place your Python package
+This is the GNU Radio ZWAVE_POORE module. Place your Python package
 description here (python/__init__.py).
 '''
 
-# import swig generated symbols into the tpms_poore namespace
+# import swig generated symbols into the zwave_poore namespace
 try:
 	# this might fail if the module is python-only
-	from tpms_poore_swig import *
+	from zwave_poore_swig import *
 except ImportError:
 	pass
 
 # import any pure python here
 from message_generator_pdu import message_generator_pdu
-from decoder import decoder
 #

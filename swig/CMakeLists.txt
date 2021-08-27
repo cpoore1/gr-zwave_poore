@@ -20,10 +20,10 @@
 ########################################################################
 # Check if there is C++ code at all
 ########################################################################
-if(NOT tpms_poore_sources)
+if(NOT zwave_poore_sources)
 	MESSAGE(STATUS "No C++ sources... skipping swig/")
 	return()
-endif(NOT tpms_poore_sources)
+endif(NOT zwave_poore_sources)
 
 ########################################################################
 # Include swig generation macros
@@ -43,23 +43,23 @@ foreach(incdir ${GNURADIO_RUNTIME_INCLUDE_DIRS})
     list(APPEND GR_SWIG_INCLUDE_DIRS ${incdir}/gnuradio/swig)
 endforeach(incdir)
 
-set(GR_SWIG_LIBRARIES gnuradio-tpms_poore)
-set(GR_SWIG_DOC_FILE ${CMAKE_CURRENT_BINARY_DIR}/tpms_poore_swig_doc.i)
+set(GR_SWIG_LIBRARIES gnuradio-zwave_poore)
+set(GR_SWIG_DOC_FILE ${CMAKE_CURRENT_BINARY_DIR}/zwave_poore_swig_doc.i)
 set(GR_SWIG_DOC_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
-GR_SWIG_MAKE(tpms_poore_swig tpms_poore_swig.i)
+GR_SWIG_MAKE(zwave_poore_swig zwave_poore_swig.i)
 
 ########################################################################
 # Install the build swig module
 ########################################################################
-GR_SWIG_INSTALL(TARGETS tpms_poore_swig DESTINATION ${GR_PYTHON_DIR}/tpms_poore)
+GR_SWIG_INSTALL(TARGETS zwave_poore_swig DESTINATION ${GR_PYTHON_DIR}/zwave_poore)
 
 ########################################################################
 # Install swig .i files for development
 ########################################################################
 install(
     FILES
-    tpms_poore_swig.i
-    ${CMAKE_CURRENT_BINARY_DIR}/tpms_poore_swig_doc.i
-    DESTINATION ${GR_INCLUDE_DIR}/tpms_poore/swig
+    zwave_poore_swig.i
+    ${CMAKE_CURRENT_BINARY_DIR}/zwave_poore_swig_doc.i
+    DESTINATION ${GR_INCLUDE_DIR}/zwave_poore/swig
 )

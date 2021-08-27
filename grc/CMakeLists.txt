@@ -16,7 +16,7 @@
 # along with GNU Radio; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
+
 install(FILES
-    tpms_poore_message_generator_pdu.xml
-    tpms_poore_decoder.xml DESTINATION share/gnuradio/grc/blocks
+    zwave_poore_message_generator_pdu.xml DESTINATION share/gnuradio/grc/blocks
 )

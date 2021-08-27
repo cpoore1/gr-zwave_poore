@@ -31,8 +31,7 @@ endif()
 GR_PYTHON_INSTALL(
     FILES
     __init__.py
-    message_generator_pdu.py
-    decoder.py DESTINATION ${GR_PYTHON_DIR}/tpms_poore
+    message_generator_pdu.py DESTINATION ${GR_PYTHON_DIR}/zwave_poore
 )
 
 ########################################################################
@@ -40,5 +39,5 @@ GR_PYTHON_INSTALL(
 ########################################################################
 include(GrTest)
 
-set(GR_TEST_TARGET_DEPS gnuradio-tpms_poore)
+set(GR_TEST_TARGET_DEPS gnuradio-zwave_poore)
 set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)

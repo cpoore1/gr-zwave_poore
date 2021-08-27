@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
-# Title: Tpms Fsk Usrpb205Mini Transmit
-# Generated: Sat Jul 24 18:19:15 2021
+# Title: Zwave Tx
+# Generated: Tue Aug 24 21:43:13 2021
 ##################################################
 
 from distutils.version import StrictVersion
@@ -34,16 +34,16 @@ import math
 import sip
 import sys
 import time
-import tpms_poore
+import zwave_poore
 from gnuradio import qtgui
 
 
-class TPMS_FSK_USRPB205mini_Transmit(gr.top_block, Qt.QWidget):
+class zwave_tx(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "Tpms Fsk Usrpb205Mini Transmit")
+        gr.top_block.__init__(self, "Zwave Tx")
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("Tpms Fsk Usrpb205Mini Transmit")
+        self.setWindowTitle("Zwave Tx")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
@@ -61,7 +61,7 @@ class TPMS_FSK_USRPB205mini_Transmit(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "TPMS_FSK_USRPB205mini_Transmit")
+        self.settings = Qt.QSettings("GNU Radio", "zwave_tx")
 
         if StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
             self.restoreGeometry(self.settings.value("geometry").toByteArray())
@@ -71,23 +71,19 @@ class TPMS_FSK_USRPB205mini_Transmit(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.unknown2 = unknown2 = "0"
-        self.unknown1 = unknown1 = "0"
-        self.tx_gain = tx_gain = 40
-        self.tx_freq = tx_freq = 314.96e6
-        self.tire_temperature_c = tire_temperature_c = 20
-        self.tire_pressure_psi = tire_pressure_psi = 5
-        self.sensor_id = sensor_id = "528A510"
-        self.self_test = self_test = "0"
+        self.tx_gain = tx_gain = 60
+        self.tx_freq = tx_freq = 916e6
+        self.source_node_id = source_node_id = "01"
         self.samp_rate = samp_rate = 1e6
-        self.repetition_interval = repetition_interval = 1
-        self.counter = counter = "00"
-        self.configuration = configuration = 1
-        self.battery_status = battery_status = "0"
+        self.repetition_interval = repetition_interval = .15
+        self.msg_length = msg_length = 10+12+2
+        self.home_id = home_id = "fa1c0b48"
+        self.destination_node_id = destination_node_id = "02"
 
         ##################################################
         # Blocks
         ##################################################
+        self.zwave_poore_message_generator_pdu_0_0_0_0_0_0_0_0 = zwave_poore.message_generator_pdu(repetition_interval, 3, home_id, source_node_id, "4108", destination_node_id, "33", "0505000001000240039c0400")
         self.uhd_usrp_sink_1_0 = uhd.usrp_sink(
         	",".join(("", "")),
         	uhd.stream_args(
@@ -100,9 +96,8 @@ class TPMS_FSK_USRPB205mini_Transmit(gr.top_block, Qt.QWidget):
         self.uhd_usrp_sink_1_0.set_center_freq(tx_freq, 0)
         self.uhd_usrp_sink_1_0.set_gain(tx_gain, 0)
         self.uhd_usrp_sink_1_0.set_antenna('TX/RX', 0)
-        self.tpms_poore_message_generator_pdu_0 = tpms_poore.message_generator_pdu(repetition_interval, configuration, sensor_id, battery_status, counter, unknown1, unknown2, self_test, tire_pressure_psi, tire_temperature_c)
         self.qtgui_time_sink_x_0_0_0_1 = qtgui.time_sink_c(
-        	80000, #size
+        	20000, #size
         	1, #samp_rate
         	"", #name
         	1 #number of inputs
@@ -153,7 +148,7 @@ class TPMS_FSK_USRPB205mini_Transmit(gr.top_block, Qt.QWidget):
         self._qtgui_time_sink_x_0_0_0_1_win = sip.wrapinstance(self.qtgui_time_sink_x_0_0_0_1.pyqwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_time_sink_x_0_0_0_1_win)
         self.qtgui_time_sink_x_0_0_0 = qtgui.time_sink_f(
-        	80000, #size
+        	20000, #size
         	1, #samp_rate
         	"", #name
         	1 #number of inputs
@@ -201,47 +196,35 @@ class TPMS_FSK_USRPB205mini_Transmit(gr.top_block, Qt.QWidget):
         self._qtgui_time_sink_x_0_0_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0_0_0.pyqwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_time_sink_x_0_0_0_win)
         self.digital_gfsk_mod_0 = digital.gfsk_mod(
-        	samples_per_symbol=100,
+        	samples_per_symbol=10,
         	sensitivity=0.25,
         	bt=0.65,
         	verbose=False,
         	log=False,
         )
         self.blocks_tag_gate_0 = blocks.tag_gate(gr.sizeof_gr_complex * 1, False)
-        self.blocks_stream_to_tagged_stream_0 = blocks.stream_to_tagged_stream(gr.sizeof_gr_complex, 1, 100*8*20, "packet_len")
+        self.blocks_stream_to_tagged_stream_0_0 = blocks.stream_to_tagged_stream(gr.sizeof_gr_complex, 1, 10*8*(26+msg_length+4), "packet_len")
         self.blocks_pdu_to_tagged_stream_0 = blocks.pdu_to_tagged_stream(blocks.byte_t, 'packet_len')
-        self.blocks_delay_0 = blocks.delay(gr.sizeof_gr_complex*1, 15800)
+        self.blocks_delay_0_0 = blocks.delay(gr.sizeof_gr_complex*1, (10*8*(26+msg_length+4))-24)
         self.analog_quadrature_demod_cf_0_0 = analog.quadrature_demod_cf(samp_rate/(2*math.pi*80000/8.0))
 
         ##################################################
         # Connections
         ##################################################
-        self.msg_connect((self.tpms_poore_message_generator_pdu_0, 'out'), (self.blocks_pdu_to_tagged_stream_0, 'pdus'))
+        self.msg_connect((self.zwave_poore_message_generator_pdu_0_0_0_0_0_0_0_0, 'out'), (self.blocks_pdu_to_tagged_stream_0, 'pdus'))
         self.connect((self.analog_quadrature_demod_cf_0_0, 0), (self.qtgui_time_sink_x_0_0_0, 0))
-        self.connect((self.blocks_delay_0, 0), (self.blocks_stream_to_tagged_stream_0, 0))
+        self.connect((self.blocks_delay_0_0, 0), (self.blocks_stream_to_tagged_stream_0_0, 0))
         self.connect((self.blocks_pdu_to_tagged_stream_0, 0), (self.digital_gfsk_mod_0, 0))
-        self.connect((self.blocks_stream_to_tagged_stream_0, 0), (self.analog_quadrature_demod_cf_0_0, 0))
-        self.connect((self.blocks_stream_to_tagged_stream_0, 0), (self.qtgui_time_sink_x_0_0_0_1, 0))
-        self.connect((self.blocks_stream_to_tagged_stream_0, 0), (self.uhd_usrp_sink_1_0, 0))
-        self.connect((self.blocks_tag_gate_0, 0), (self.blocks_delay_0, 0))
+        self.connect((self.blocks_stream_to_tagged_stream_0_0, 0), (self.analog_quadrature_demod_cf_0_0, 0))
+        self.connect((self.blocks_stream_to_tagged_stream_0_0, 0), (self.qtgui_time_sink_x_0_0_0_1, 0))
+        self.connect((self.blocks_stream_to_tagged_stream_0_0, 0), (self.uhd_usrp_sink_1_0, 0))
+        self.connect((self.blocks_tag_gate_0, 0), (self.blocks_delay_0_0, 0))
         self.connect((self.digital_gfsk_mod_0, 0), (self.blocks_tag_gate_0, 0))
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "TPMS_FSK_USRPB205mini_Transmit")
+        self.settings = Qt.QSettings("GNU Radio", "zwave_tx")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
-
-    def get_unknown2(self):
-        return self.unknown2
-
-    def set_unknown2(self, unknown2):
-        self.unknown2 = unknown2
-
-    def get_unknown1(self):
-        return self.unknown1
-
-    def set_unknown1(self, unknown1):
-        self.unknown1 = unknown1
 
     def get_tx_gain(self):
         return self.tx_gain
@@ -258,29 +241,11 @@ class TPMS_FSK_USRPB205mini_Transmit(gr.top_block, Qt.QWidget):
         self.tx_freq = tx_freq
         self.uhd_usrp_sink_1_0.set_center_freq(self.tx_freq, 0)
 
-    def get_tire_temperature_c(self):
-        return self.tire_temperature_c
+    def get_source_node_id(self):
+        return self.source_node_id
 
-    def set_tire_temperature_c(self, tire_temperature_c):
-        self.tire_temperature_c = tire_temperature_c
-
-    def get_tire_pressure_psi(self):
-        return self.tire_pressure_psi
-
-    def set_tire_pressure_psi(self, tire_pressure_psi):
-        self.tire_pressure_psi = tire_pressure_psi
-
-    def get_sensor_id(self):
-        return self.sensor_id
-
-    def set_sensor_id(self, sensor_id):
-        self.sensor_id = sensor_id
-
-    def get_self_test(self):
-        return self.self_test
-
-    def set_self_test(self, self_test):
-        self.self_test = self_test
+    def set_source_node_id(self, source_node_id):
+        self.source_node_id = source_node_id
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -295,26 +260,29 @@ class TPMS_FSK_USRPB205mini_Transmit(gr.top_block, Qt.QWidget):
     def set_repetition_interval(self, repetition_interval):
         self.repetition_interval = repetition_interval
 
-    def get_counter(self):
-        return self.counter
+    def get_msg_length(self):
+        return self.msg_length
 
-    def set_counter(self, counter):
-        self.counter = counter
+    def set_msg_length(self, msg_length):
+        self.msg_length = msg_length
+        self.blocks_stream_to_tagged_stream_0_0.set_packet_len(10*8*(26+self.msg_length+4))
+        self.blocks_stream_to_tagged_stream_0_0.set_packet_len_pmt(10*8*(26+self.msg_length+4))
+        self.blocks_delay_0_0.set_dly((10*8*(26+self.msg_length+4))-24)
 
-    def get_configuration(self):
-        return self.configuration
+    def get_home_id(self):
+        return self.home_id
 
-    def set_configuration(self, configuration):
-        self.configuration = configuration
+    def set_home_id(self, home_id):
+        self.home_id = home_id
 
-    def get_battery_status(self):
-        return self.battery_status
+    def get_destination_node_id(self):
+        return self.destination_node_id
 
-    def set_battery_status(self, battery_status):
-        self.battery_status = battery_status
+    def set_destination_node_id(self, destination_node_id):
+        self.destination_node_id = destination_node_id
 
 
-def main(top_block_cls=TPMS_FSK_USRPB205mini_Transmit, options=None):
+def main(top_block_cls=zwave_tx, options=None):
 
     if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
         style = gr.prefs().get_string('qtgui', 'style', 'raster')

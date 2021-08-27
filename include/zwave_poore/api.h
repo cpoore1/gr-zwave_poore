@@ -1,6 +1,5 @@
-/* -*- c++ -*- */
 /*
- * Copyright 2012 Free Software Foundation, Inc.
+ * Copyright 2011 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -20,29 +19,15 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
+#ifndef INCLUDED_ZWAVE_POORE_API_H
+#define INCLUDED_ZWAVE_POORE_API_H
+
+#include <gnuradio/attributes.h>
+
+#ifdef gnuradio_zwave_poore_EXPORTS
+#  define ZWAVE_POORE_API __GR_ATTR_EXPORT
+#else
+#  define ZWAVE_POORE_API __GR_ATTR_IMPORT
 #endif
 
-#include <cppunit/TextTestRunner.h>
-#include <cppunit/XmlOutputter.h>
-
-#include <gnuradio/unittests.h>
-#include "qa_tpms_poore.h"
-#include <iostream>
-#include <fstream>
-
-int
-main (int argc, char **argv)
-{
-  CppUnit::TextTestRunner runner;
-  std::ofstream xmlfile(get_unittest_path("tpms_poore.xml").c_str());
-  CppUnit::XmlOutputter *xmlout = new CppUnit::XmlOutputter(&runner.result(), xmlfile);
-
-  runner.addTest(qa_tpms_poore::suite());
-  runner.setOutputter(xmlout);
-
-  bool was_successful = runner.run("", false);
-
-  return was_successful ? 0 : 1;
-}
+#endif /* INCLUDED_ZWAVE_POORE_API_H */
