@@ -33,7 +33,7 @@ The example flow graph contains commands for turning the RGB bulb on and off alo
 
 The _msg\_length_ variable is the length in bytes from the start of the Home ID until the end of the CRC. The Home ID belongs to the light bulb. The Source Node ID represents the Z-Stick and the Destination Node ID is the bulb. The Command Classes and the formats for each message can be found in the Z-Wave Command Class specification. Lists of what hex values are associated with each Command Class can be found in the link above. The CRC is calculated across the Home ID to the end of the command. The polynomial is 0x1021 with a seed of 0x1D0F with no final XORing or data reversal.
 
-There is a preamble of roughly 25 bytes of 0xaa followed by 0xf0 which are not part of the length count. Zeros are padded at the end of the message and the number of zero-padded bytes does not have an impact. I invert all the bits so the higher frequency is a 0 and the lower is a 1.
+There is a preamble of roughly 25 bytes of 0x55 followed by 0xF0 which are not part of the length count. Zeros are padded at the end of the message and the number of zero-padded bytes does not have an impact. I invert all the bits so the higher frequency is a 0 and the lower is a 1.
 
 I do a weird tagging method for each message because the GFSK Mod hierarchical block adds a delay to things. Fortunately, it looks consistent. Fewer messages will go through if the message length is not accounted for in the delay and stream tagging.
 
