@@ -41,7 +41,7 @@ All messages were transmitted after the light bulb was included into the stick's
 
 Here's a video of the random color configuration in action:
 
-
+https://user-images.githubusercontent.com/12356089/131055067-3cf2e84f-a1bf-4b42-9021-76f22a84f62b.mp4
 
 # Receive
 
