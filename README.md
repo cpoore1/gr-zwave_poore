@@ -45,7 +45,7 @@ https://user-images.githubusercontent.com/12356089/131055067-3cf2e84f-a1bf-4b42-
 
 # Receive
 
-The example receive flow graph will tag the start and stop of a message, smooth the output of the quadrature demod block, and take one of every ten samples for decoding. This will not decode every message due to a lack of synchrnonization with the one out of every ten samples. The CRC is calculated for each decoded message and it can be compared with what is read in the message for integrity verification. It does not work well for weak signals. If successful, a message like this will appear:
+The example receive flow graph will tag the start and stop of a message, smooth the output of the quadrature demod block, and take one of every ten samples for decoding. This will not decode every message due to a lack of synchronization with the one out of ten samples. The CRC is calculated for each decoded message and it can be compared with what is read in the message for integrity verification. It does not work well for weak signals. If successful, a message like this will appear:
 
 ```
 Message #283:
