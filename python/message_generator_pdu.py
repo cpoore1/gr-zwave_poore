@@ -1,23 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
-# Copyright 2021 <+YOU OR YOUR COMPANY+>.
-# 
+#
+# Copyright 2021 gr-zwave_poore author.
+#
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this software; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-# 
+#
+
 
 import numpy
 from gnuradio import gr
@@ -86,7 +87,7 @@ class message_generator_pdu(gr.sync_block):
     
     def generateMessage(self):
         while True:
-            print "GENERATE MESSAGE"          
+            print("GENERATE MESSAGE")         
                    
             # Change Colors on Configuration
             if self.configuration == 2:
@@ -95,8 +96,8 @@ class message_generator_pdu(gr.sync_block):
                 self.newColor(1)
             
             # Calculate Length
-            self.payload_length = hex(10 + 2 + len(self.command)/2)[2:].zfill(2)  # Home ID until the end of the CRC   
-            #print self.payload_length
+            self.payload_length = hex(10 + 2 + int(len(self.command)/2))[2:].zfill(2)  # Home ID until the end of the CRC   
+            #print(self.payload_length)
                         
             # Optional Fuzzing 
             #fbyte = 11     
@@ -113,11 +114,11 @@ class message_generator_pdu(gr.sync_block):
             
             # Known Seed
             acc = get_seed
-            for n in range(0,len(get_input)/2):
-                new_byte = get_input[2*n:2*n+2]                
+            for n in range(0,int(len(get_input)/2)):
+                new_byte = get_input[2*n:2*n+2]           
                 acc = self.updateCRC(get_poly, acc, new_byte)  # Poly: 0x1021, Seed: 0x1DOF                
             get_msg = get_msg + acc # 2-byte CRC at the end
-            print get_msg
+            print(get_msg)
                                                                     
             # Send the PDU
             car = pmt.make_dict()           
@@ -136,7 +137,7 @@ class message_generator_pdu(gr.sync_block):
             bit_modulo = len(inverted_bits) % 4
             if bit_modulo != 0:
                 inverted_bits = inverted_bits[:-bit_modulo]                
-            get_hex = str(('%0*X' % (2,int(inverted_bits,2))).zfill(len(inverted_bits)/4))
+            get_hex = str(('%0*X' % (2,int(inverted_bits,2))).zfill(int(len(inverted_bits)/4)))
             data = unhexlify(get_hex)  # '\x11\x22\x33...'           
 
             data = bytes(data)         
@@ -213,7 +214,7 @@ class message_generator_pdu(gr.sync_block):
         
         # Random Color
         else:
-            random_6hex = b2a_hex(os.urandom(3))
-            self.command = "05050000010002" + random_6hex[0:2] + "03" + random_6hex[2:4] + "04" + random_6hex[4:6]
+            random_6hex = b2a_hex(os.urandom(3))  # b'3cdb1a'
+            self.command = "05050000010002" + str(random_6hex[0:2])[2:4] + "03" + str(random_6hex[2:4])[2:4] + "04" + str(random_6hex[4:6])[2:4]
             
         

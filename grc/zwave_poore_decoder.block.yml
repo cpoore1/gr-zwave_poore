@@ -1,0 +1,26 @@
+id: zwave_poore_decoder
+label: decoder
+category: '[zwave_poore]'
+
+templates:
+  imports: import zwave_poore
+  make: zwave_poore.decoder()
+
+inputs:
+- label: in
+  domain: stream
+  dtype: float
+  vlen: 1
+  optional: 0
+
+
+outputs:
+- label: out
+  domain: message
+  dtype: message
+  vlen: 1
+  optional: 0
+
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1

@@ -1,23 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
-# Copyright 2021 <+YOU OR YOUR COMPANY+>.
-# 
+#
+# Copyright 2021 gr-zwave_poore author.
+#
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this software; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-# 
+#
+
 
 import numpy
 from gnuradio import gr
@@ -53,12 +54,12 @@ class decoder(gr.sync_block):
         # Locate Tags
         tags = self.get_tags_in_window(0, 0, in0_len, pmt.string_to_symbol("burst"))
         #if len(tags) > 0:
-            #print "Num of tags: " + str(len(tags))
-            #print in0_len
+            #print("Num of tags: " + str(len(tags)))
+            #print(in0_len)
 
         # Tag Exists
         for n in range(0,len(tags)):  #.offset, .key, .value 
-            #print tags[n].value 
+            #print(tags[n].value) 
               
             # Get Start Tag Location
             if str(tags[n].value) == "#t":
@@ -99,13 +100,14 @@ class decoder(gr.sync_block):
         # Do Analysis on all the Data
         if self.do_analysis is True:
             
-            #print "DOING ANALYSIS!! " + str(len(self.if_data_list))
+            #print("DOING ANALYSIS!! " + str(len(self.if_data_list)))
             for n in range(0, len(self.if_data_list)):
-                #print len(self.if_data_list[n])            
+                #print(len(self.if_data_list[n]))          
 
                 # Obtain Bitstream
                 get_bits = self.getBitstream(self.if_data_list[n])
-            
+                #print(len(get_bits))
+                
                 # Parse Bits
                 if len(get_bits) > 104:
                     get_message = self.decodeBitstream(get_bits)
@@ -154,7 +156,8 @@ class decoder(gr.sync_block):
         try:
             # Calculate Length of Command
             get_length = int('0b'+get_bits[56:64], 0)
-            get_length = get_length - 12          
+            get_length = get_length - 12       
+            print(get_length)   
                  
             # Generate Output Message
             if get_length > 0:
@@ -174,8 +177,8 @@ class decoder(gr.sync_block):
                 
                 # Known Seed
                 acc = get_seed
-                for n in range(0,len(get_input)/2):
-                    new_byte = get_input[2*n:2*n+2]                
+                for n in range(0,int(len(get_input)/2)):
+                    new_byte = get_input[2*n:2*n+2]   
                     acc = self.updateCRC(get_poly, acc, new_byte)  # Poly: 0x1021, Seed: 0x1DOF                                
                 
                 # Populate the Message
@@ -225,3 +228,4 @@ class decoder(gr.sync_block):
         
         return crc_acc
          
+

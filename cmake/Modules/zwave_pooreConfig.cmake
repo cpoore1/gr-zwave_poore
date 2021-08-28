@@ -22,9 +22,10 @@ FIND_LIBRARY(
           /usr/local/lib64
           /usr/lib
           /usr/lib64
-)
+          )
+
+include("${CMAKE_CURRENT_LIST_DIR}/zwave_pooreTarget.cmake")
 
 INCLUDE(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(ZWAVE_POORE DEFAULT_MSG ZWAVE_POORE_LIBRARIES ZWAVE_POORE_INCLUDE_DIRS)
 MARK_AS_ADVANCED(ZWAVE_POORE_LIBRARIES ZWAVE_POORE_INCLUDE_DIRS)
-
