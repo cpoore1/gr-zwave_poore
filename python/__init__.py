@@ -32,4 +32,5 @@ except ImportError:
 
 # import any pure python here
 from message_generator_pdu import message_generator_pdu
+from decoder import decoder
 #

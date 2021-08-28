@@ -18,5 +18,6 @@
 # Boston, MA 02110-1301, USA.
 
 install(FILES
-    zwave_poore_message_generator_pdu.xml DESTINATION share/gnuradio/grc/blocks
+    zwave_poore_message_generator_pdu.xml
+    zwave_poore_decoder.xml DESTINATION share/gnuradio/grc/blocks
 )
