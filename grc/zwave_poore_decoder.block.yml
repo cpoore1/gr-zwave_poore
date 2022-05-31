@@ -19,8 +19,11 @@ outputs:
   domain: message
   dtype: message
   vlen: 1
-  optional: 0
-
-#  'file_format' specifies the version of the GRC yml format used in the file
-#  and should usually not be changed.
+  optional: 1
+- label: bytes
+  domain: message
+  dtype: message
+  vlen: 1
+  optional: 1 
+  
 file_format: 1

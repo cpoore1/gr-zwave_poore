@@ -42,6 +42,7 @@ class decoder(gr.sync_block):
         self.message_number = 1
         
         self.message_port_register_out(pmt.intern('out'))
+        self.message_port_register_out(pmt.intern('bytes'))
         
 
 
@@ -111,6 +112,14 @@ class decoder(gr.sync_block):
                 # Parse Bits
                 if len(get_bits) > 104:
                     get_message = self.decodeBitstream(get_bits)
+                    
+                    # Add Excess Bits
+                    if len(get_bits)%8 != 0:
+                        get_bits = get_bits + '0'*(8-len(get_bits)%8)
+                    
+                    # Print Bytes to Output Port    
+                    data_hex = ('%0*X' % (2,int(get_bits,2))).zfill(int(len(get_bits)/4))
+                    self.message_port_pub(pmt.intern("bytes"), pmt.to_pmt(data_hex))                    
 
                     # Print to Output Port
                     self.message_port_pub(pmt.intern("out"), pmt.to_pmt(get_message))
