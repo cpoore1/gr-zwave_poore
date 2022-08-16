@@ -1,6 +1,8 @@
 # gr-zwave_poore
 
-This GNU Radio out-of-tree module transmits Z-Wave signals and was tested with a USRP B210. Signals from an Aeotec Z-Stick Gen5 communicating with a Monoprice Z-Wave Plus RGB Smart Bulb through openHAB were analyzed with FM demodulation code and with the _rtl-zwave_ application. For longer messages, _rtl-zwave_ would consistently drop a bit and was a cause for some confusion. Inserting the missing bit did produce valid messages. I will attempt to develop more reliable receive code and update it here. I had limited success with the _scapy-radio_ z-wave module.
+This GNU Radio out-of-tree module transmits Z-Wave signals and was tested with a USRP B210. Signals from an Aeotec Z-Stick Gen5 communicating with a Monoprice Z-Wave Plus RGB Smart Bulb through openHAB were analyzed with FM demodulation code and with the _rtl-zwave_ application. For longer messages, _rtl-zwave_ would consistently drop a bit and was a cause for some confusion. Inserting the missing bit did produce valid messages. I will attempt to develop more reliable receive code and update it here. I had limited success with the _scapy-radio_ Z-Wave module.
+
+This software has been integrated into [FISSURE: The RF Framework](https://github.com/ainfosec/FISSURE).
 
 # Installation
 
