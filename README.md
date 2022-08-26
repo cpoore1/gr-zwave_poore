@@ -6,7 +6,8 @@ This software has been integrated into [FISSURE: The RF Framework](https://githu
 
 # Installation
 
-The maint-3.7 branch is for GNU Radio versions prior to 3.8 while the maint-3.8 is for versions 3.8+.
+The maint-3.7 branch is for GNU Radio versions prior to 3.8, the maint-3.8 is for version 3.8 and 
+maint-3.10 is for version >=3.10.
 
 ```
 cd gr-zwave_poore/
